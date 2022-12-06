@@ -15,7 +15,7 @@ int main()
 	string summary = "\nSeasoned warrior in the art of making S@!# happen!\n";
 	
 	double hp, sp;
-	hp = 15.8f, sp = 19.5f;
+	hp = 7.8f, sp = 20.5f;
 
 	//define item
 	Item sword;
