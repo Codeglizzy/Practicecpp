@@ -19,6 +19,7 @@ private:
 	double classCurrencyBonus;
 
 	int inventorySpace;
+	int classID;
 
 	string summary;
 	string className;
@@ -48,11 +49,9 @@ public:
 
 	void setCurrentHealth(double);
 	double getCurrentHealth() { return currentHp; }
-
-	void addHealth(double);
-	void subHealth(double);
 	
 	void setCurrentSpecial(double);
+	double getCurrentSpecial() { return currentSp; }
 
 	void setCurrency(double curr);
 	double getCurrency() { return currency; }
@@ -72,7 +71,8 @@ public:
 	void setInventorySpace(int num);
 	int getInventorySpace() { return inventorySpace; }
 
-	void DisplayStats();
+	void addHealth(double);
+	void subHealth(double);
 
 };
 
@@ -123,11 +123,15 @@ void Player::setCurrentHealth(double n)
 
 void Player::addHealth(double n)
 {
-	Player::currentHp += n;
+	if ((n + currentHp) <= baseHp)
+		Player::currentHp += n;
+	else
+		this->setCurrentHealth(baseHp);
 }
 
 void Player::subHealth(double n)
 {
-	Player::currentHp -= n;
+	if((currentHp - n) > 0)
+		this->currentHp -= n;
 }
 
