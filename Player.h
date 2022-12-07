@@ -39,25 +39,12 @@ public:
 		this->inventorySpace = 15;
 	}
 
-	Player(double hp, double sp, double wealth, string txt)
-	{
-		this->baseHp = hp;
-		this->classBonus = 0;
-		this->currentHp = hp;
-		this->baseSp = sp;
-		this->currentSp = sp;
-		this->currency = wealth;
-		this->classCurrencyBonus = 0;
-		this->inventorySpace = 15;
-
-		this->summary = txt;
-	}
 
 	void setBaseHealth(double setHp);
-	double getHealth() { return currentHp; }
+	double getBaseHealth() { return baseHp; } 
 
-	void setSpecial(double setSp);
-	double getSpecial() { return currentSp; }
+	void setBaseSpecial(double setSp);
+	double getBaseSpecial() { return baseSp; }
 
 	void setCurrentHealth(double);
 	double getCurrentHealth() { return currentHp; }
@@ -94,7 +81,7 @@ void Player::setBaseHealth(double setHp)
 	Player::baseHp = setHp;
 }
 
-void Player::setSpecial(double setSp)
+void Player::setBaseSpecial(double setSp)
 {
 	Player::baseSp = setSp;
 }
