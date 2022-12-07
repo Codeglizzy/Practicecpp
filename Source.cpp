@@ -28,16 +28,15 @@ int main()
 	sword.setItemID(12);
 
 	//define myGuy (player)
-	Player myGuy/*(hp, sp, 150, summary)*/;
+	Player myGuy;
 	myGuy.setItem(sword);
 	myGuy.setSummary(summary);
-	myGuy.setHealth(hp);
+	myGuy.setBaseHealth(hp);
 	myGuy.setSpecial(sp);
 	myGuy.setClassName("Warrior");
 	myGuy.setCurrency(150.00);
 	cout << "...and what will be the name of your adventurer? :> ";
 	myGuy.setPlayerName(PromptString());
-
 	cout << showpoint << setprecision(6);
 	cout << endl << "Name: " << myGuy.getPlayerName() << endl;
 	cout << "Class: " << myGuy.getClassName() << endl;

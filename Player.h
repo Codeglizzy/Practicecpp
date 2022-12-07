@@ -53,11 +53,19 @@ public:
 		this->summary = txt;
 	}
 
-	void setHealth(double setHp);
+	void setBaseHealth(double setHp);
 	double getHealth() { return currentHp; }
 
 	void setSpecial(double setSp);
 	double getSpecial() { return currentSp; }
+
+	void setCurrentHealth(double);
+	double getCurrentHealth() { return currentHp; }
+
+	void addHealth(double);
+	void subHealth(double);
+	
+	void setCurrentSpecial(double);
 
 	void setCurrency(double curr);
 	double getCurrency() { return currency; }
@@ -81,7 +89,7 @@ public:
 
 };
 
-void Player::setHealth(double setHp)
+void Player::setBaseHealth(double setHp)
 {
 	Player::baseHp = setHp;
 }
@@ -121,9 +129,18 @@ void Player::setInventorySpace(int num)
 	Player::inventorySpace = num;
 }
 
-void Player::DisplayStats()
+void Player::setCurrentHealth(double n)
 {
-	cout << this->baseHp << endl;
-	cout << this->baseSp << endl;
+	Player::currentHp = n;
+}
+
+void Player::addHealth(double n)
+{
+	Player::currentHp += n;
+}
+
+void Player::subHealth(double n)
+{
+	Player::currentHp -= n;
 }
 
