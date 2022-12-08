@@ -5,6 +5,7 @@
 #include <string>
 #include <Windows.h>
 #include "Items.h"
+#include "Util.h"
 using namespace std;
 
 class Player
@@ -17,6 +18,7 @@ private:
 	double currentSp;
 	double currency;
 	double classCurrencyBonus;
+	double damage;
 
 	int inventorySpace;
 	int classID;
@@ -38,6 +40,13 @@ public:
 		this->currency = 0;
 		this->classCurrencyBonus = 0;
 		this->inventorySpace = 15;
+		this->classID = 0;
+		this->damage = 1.0;
+	}
+
+	Player(string n)
+	{
+		this->playerName = n;
 	}
 
 
@@ -70,6 +79,9 @@ public:
 
 	void setInventorySpace(int num);
 	int getInventorySpace() { return inventorySpace; }
+
+	void setDamage(double num);
+	double getDamage() { return damage; }
 
 	void addHealth(double);
 	void subHealth(double);
@@ -119,6 +131,11 @@ void Player::setInventorySpace(int num)
 void Player::setCurrentHealth(double n)
 {
 	Player::currentHp = n;
+}
+
+void Player::setDamage(double num)
+{
+	Player::damage = num;
 }
 
 void Player::addHealth(double n)

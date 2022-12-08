@@ -22,9 +22,11 @@
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GameManager.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TestPlayerClass.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="song.wav" />

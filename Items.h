@@ -1,8 +1,5 @@
 #pragma once
-#include <iostream>
-#include <iomanip>
-#include <string>
-#include <Windows.h>
+#include "GameManager.h"
 using namespace std;
 
 class Item
@@ -10,18 +7,37 @@ class Item
 private:
 	bool consumable;
 
+	double itemValue;
+
 	int itemQuantity;
-	int itemValue;
 	int itemSpace;
 	int itemID;
 
 	string itemName;
 public:
+	Item()
+	{
+		consumable = false;
+		itemValue = 0;
+		itemQuantity = 1;
+		itemSpace = 1;
+		itemID = 00;
+		itemName = "EMPTY_OBJECT";
+	}
+
+	Item(string n)
+	{
+		this->itemName = n;
+	}
+
 	void setConsumable(bool flag);
 	bool getConsumable() { return consumable; }
 
 	void setItemQuantity(int num);
 	int getQuantity() { return itemQuantity; }
+
+	void setItemValue(double val);
+	double getItemValue() { return itemValue; }
 
 	void setInventorySpace(int num);
 	int getInventoryRealEstate() { return itemSpace; }
@@ -56,4 +72,9 @@ void Item::setItemID(int id)
 void Item::setItemName(string name)
 {
 	Item::itemName = name;
+}
+
+void Item::setItemValue(double val)
+{
+	this->itemValue = val;
 }
