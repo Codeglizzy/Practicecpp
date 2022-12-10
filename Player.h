@@ -133,6 +133,11 @@ void Player::setCurrentHealth(double n)
 	Player::currentHp = n;
 }
 
+void Player::setCurrentSpecial(double p)
+{
+	Player::currentSp = p; 
+}
+
 void Player::setDamage(double num)
 {
 	Player::damage = num;
