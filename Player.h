@@ -1,55 +1,36 @@
 #pragma once
-#include <iostream>
-#include <conio.h>
-#include <iomanip>
-#include <string>
-#include <Windows.h>
-#include "Items.h"
-#include "Util.h"
+#include "GameManager.h"
+
 using namespace std;
 
 class Player
 {
 private:
+	//Player Stats
 	double baseHp;
-	double classBonus;
 	double currentHp;
 	double baseSp;
 	double currentSp;
 	double currency;
-	double classCurrencyBonus;
 	double damage;
 
-	int inventorySpace;
+	//Inventory
+	int max_invSize;
+	int curr_invSize;
 	int classID;
 
+	//Personality
 	string summary;
 	string className;
 	string playerName;
 
-	Item weapon;
+	
 
 public:
-	Player()
-	{
-		this->baseHp = 0;
-		this->classBonus = 0;
-		this->currentHp = 0;
-		this->baseSp = 0;
-		this->currentSp = 0;
-		this->currency = 0;
-		this->classCurrencyBonus = 0;
-		this->inventorySpace = 15;
-		this->classID = 0;
-		this->damage = 1.0;
-	}
+	//Inventory list
+	vector<Item> inventoryList;
 
-	Player(string n)
-	{
-		this->playerName = n;
-	}
-
-
+	//Prototype functions
 	void setBaseHealth(double setHp);
 	double getBaseHealth() { return baseHp; } 
 
@@ -65,9 +46,6 @@ public:
 	void setCurrency(double curr);
 	double getCurrency() { return currency; }
 
-	void setItem(Item newItem);
-	Item getItem() { return weapon; }
-
 	void setSummary(string sum);
 	string getSummary() { return summary; }
 
@@ -77,11 +55,17 @@ public:
 	void setPlayerName(string name);
 	string getPlayerName() { return playerName; }
 
-	void setInventorySpace(int num);
-	int getInventorySpace() { return inventorySpace; }
+	void setMaxInventorySize(int num);
+	int getMaxInventorySpace() { return max_invSize; }
+
+	void setCurrInventorySize(int num);
+	int getCurrInventorySize() { return curr_invSize; }
 
 	void setDamage(double num);
 	double getDamage() { return damage; }
+
+	void setClassID(int id);
+	int getClassID() { return classID; }
 
 	void addHealth(double);
 	void subHealth(double);
@@ -103,10 +87,6 @@ void Player::setCurrency(double curr)
 	Player::currency = curr;
 }
 
-void Player::setItem(Item newItem)
-{
-	Player::weapon = newItem;
-}
 
 void Player::setSummary(string sum)
 {
@@ -123,9 +103,14 @@ void Player::setPlayerName(string name)
 	Player::playerName = name;
 }
 
-void Player::setInventorySpace(int num)
+void Player::setMaxInventorySize(int num)
 {
-	Player::inventorySpace = num;
+	Player::max_invSize = num;
+}
+
+void Player::setCurrInventorySize(int num)
+{
+	Player::curr_invSize = num;
 }
 
 void Player::setCurrentHealth(double n)
@@ -155,5 +140,10 @@ void Player::subHealth(double n)
 {
 	if((currentHp - n) > 0)
 		this->currentHp -= n;
+}
+
+void Player::setClassID(int id)
+{
+	Player::classID = id;
 }
 

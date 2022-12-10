@@ -23,9 +23,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="ItemLibrary.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="TestPlayerClass.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
   <ItemGroup>

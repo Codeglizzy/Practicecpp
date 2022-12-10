@@ -26,13 +26,13 @@
     <ClInclude Include="Items.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestPlayerClass.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemLibrary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
