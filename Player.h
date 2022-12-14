@@ -70,6 +70,8 @@ public:
 	void addHealth(double);
 	void subHealth(double);
 
+	Item getWeapon() { return inventoryList[0]; }
+
 };
 
 void Player::setBaseHealth(double setHp)

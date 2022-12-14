@@ -4,11 +4,13 @@
 #include <iomanip>
 #include <string>
 #include <Windows.h>
+#include <cctype>
 #include <vector>
 #include "Items.h"
 #include "Util.h"
 #include "Player.h"
 #include "ItemLibrary.h"
+#include "Enemy.h"
 using namespace std;
 
 class GameManager
@@ -25,10 +27,12 @@ public:
 	void StartGame();
 	void GameLoop();
 
-	void InitializePlayer(Player& p, ItemLibrary& lb);
+	void InitializePlayer(Player& p);
 
 	void DisplayCharacterSheet(Player& p);
+	void DisplayCombatMenu(Player& p);
 };
+
 
 void GameManager::StartGame()
 {
@@ -41,8 +45,10 @@ void GameManager::setGameFlag(bool flag)
 }
 
 
-void GameManager::InitializePlayer(Player& p, ItemLibrary& lb)
+void GameManager::InitializePlayer(Player& p)
 {
+	ItemLibrary lb;
+
 	do
 	{
 		//Pick class
@@ -59,6 +65,7 @@ void GameManager::InitializePlayer(Player& p, ItemLibrary& lb)
 		{
 			//Set Warrior stats
 			p.setBaseHealth(25);
+			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(10);
 			p.setClassName("Warrior");
 			p.setDamage(3);
@@ -77,6 +84,7 @@ void GameManager::InitializePlayer(Player& p, ItemLibrary& lb)
 		{
 			//Set Wizard stats
 			p.setBaseHealth(15);
+			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(30);
 			p.setClassName("Wizard");
 			p.setDamage(6);
@@ -95,6 +103,7 @@ void GameManager::InitializePlayer(Player& p, ItemLibrary& lb)
 		{
 			//Set Rogue stats
 			p.setBaseHealth(10);
+			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(20);
 			p.setClassName("Rogue");
 			p.setDamage(7);
@@ -113,6 +122,7 @@ void GameManager::InitializePlayer(Player& p, ItemLibrary& lb)
 		{
 			//Set Priest stats
 			p.setBaseHealth(20);
+			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(25);
 			p.setClassName("Priest");
 			p.setDamage(5);
@@ -136,10 +146,10 @@ void GameManager::InitializePlayer(Player& p, ItemLibrary& lb)
 		DisplayCharacterSheet(p);
 		cout << endl << "Look good? (y/Y or n/N) >>: ";
 		util.PromptChar();
-		if (util.getCharInput() == 'n' || util.getCharInput() == 'N')
+		if (tolower(util.getPrevCharInput()) == 'n')
 			p.inventoryList.clear();
 	}
-	while (util.getCharInput() == 'n' || util.getCharInput() == 'N');
+	while (tolower(util.getPrevCharInput()) == 'n');
 }
 
 
@@ -149,25 +159,59 @@ void GameManager::GameLoop()
 	//Start
 	cout << "Welcome.\n\nPress any key...";
 	setGameFlag(true);
-	//PlaySound(TEXT("song.wav"), NULL, SND_ASYNC);
+	PlaySound(TEXT("song.wav"), NULL, SND_ASYNC);
 	_getch();
 	system("cls");
 
+	ItemLibrary items;
+
 	//Init player object
 	Player main_Character;
-	ItemLibrary item_Database;
+	Enemy enemy("Ragnarok", "Brute", 20, 4, items.item_Database[0]);
 
 	//Build Player
-	InitializePlayer(main_Character, item_Database);
+	InitializePlayer(main_Character);
 
-	//Display information 
-	//DisplayCharacterSheet(main_Character);
+	bool continueKey = true; int counter = 1;
+	while (continueKey)
+	{
+		cout << "Enemy #" << counter << ": ";
+		cout << "Your enemy is " << enemy.getEnemyName() << "!" << endl;
+		cout << "Your HP: " << main_Character.getCurrentHealth() << endl;
+		cout << "Enemy HP: " << enemy.getCurrentHp() << endl; 
+
+		DisplayCombatMenu(main_Character);
+		if (util.getPrevIntInput() == 1)
+		{
+			enemy.setCurrentHp(enemy.getCurrentHp() - (main_Character.getDamage() + main_Character.getWeapon().getNumericBoost()));
+			cout << "Enemy #" << counter << ": ";
+			cout << "Your enemy is " << enemy.getEnemyName() << "!" << endl;
+			cout << "Your HP: " << main_Character.getCurrentHealth() << endl;
+			cout << "Enemy HP: " << enemy.getCurrentHp() << endl;
+		}else if (util.getPrevIntInput() == 2)
+		{
+			//To do
+		}
+		else if (util.getPrevIntInput() == 3)
+		{
+			//To do
+		}else
+		{
+			//To do
+		}
+
+		cout << "Continue? y/n >>: "; util.PromptChar();
+		if (tolower(util.getPrevCharInput()) != 'y')
+			continueKey = false;
+		counter++;
+	}
 
 	//end
 	cout << endl << "See you next time! Combat coming soon!" << endl;
 	setGameFlag(false);
 	return;
 }
+
 
 
 void GameManager::DisplayCharacterSheet(Player& p)
@@ -180,7 +224,7 @@ void GameManager::DisplayCharacterSheet(Player& p)
 	cout << "Health: " << p.getBaseHealth() << endl;
 	cout << "Special: " << p.getBaseSpecial() << endl;
 	cout << "Currency: " << p.getCurrency() << endl;
-	cout << "Damage Output: " << p.getDamage() << endl;
+	cout << "Damage Output: " << (p.getDamage() + p.inventoryList[0].getNumericBoost()) << endl;
 	cout << "ID: " << p.getClassID() << endl;
 	cout << "\nStarting Items: \n";
 	for (int i = 0; i < p.inventoryList.size(); i++)
@@ -189,4 +233,12 @@ void GameManager::DisplayCharacterSheet(Player& p)
 	}
 	cout << "\nSummary: " << p.getSummary() << endl;
 	cout << "\n********************************************************************************" << endl;
+}
+
+
+void GameManager::DisplayCombatMenu(Player& p)
+{
+	cout << p.getPlayerName() << ", what would you like to do?\nPress 1 to attack; 2 to access a list of items; 3 to exit.\n"
+		<< "\n >>: ";
+	util.PromptInt();
 }

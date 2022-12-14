@@ -36,9 +36,10 @@ public:
 		return charInput;
 	}
 
+
 	int getPrevIntInput() { return numericInput; }
 	double getPrevDoubleInput() { return floatingPointInput; }
 	string getPrevStringInput() { return stringInput; }
-	char getCharInput() { return charInput; }
+	char getPrevCharInput() { return charInput; }
 };
 

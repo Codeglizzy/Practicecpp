@@ -48,7 +48,7 @@ public:
 	string getItemName() { return itemName; }
 
 	void setNumericBoost(double v);
-	double getNumbericBoost() { return numericBoost; }
+	double getNumericBoost() { return numericBoost; }
 };
 
 void Item::initItem(string n, bool c,double p, double v, int h)
