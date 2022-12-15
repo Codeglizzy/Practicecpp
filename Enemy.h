@@ -65,7 +65,7 @@ public:
 	void setClassName(string);
 	string getClassName() { return className; }
 
-	void setAlive(bool);
+	void setIsAlive(bool);
 	bool getIsAlive() { return isAlive; }
 
 	void Initialize(string, string, double, double, Item&);
@@ -102,7 +102,7 @@ void Enemy::setDamage(double dam)
 	this->damage = dam;
 }
 
-void Enemy::setAlive(bool flag)
+void Enemy::setIsAlive(bool flag)
 {
 	this->isAlive = flag;
 }
@@ -115,4 +115,5 @@ void Enemy::Initialize(string name, string cName, double hp, double dam, Item& i
 	this->currentHp = this->baseHp;
 	this->damage = dam;
 	this->weapon = item;
+	this->isAlive = true;
 }

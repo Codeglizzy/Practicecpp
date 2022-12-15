@@ -20,6 +20,7 @@ private:
 	double currentSp;
 	double currency;
 	double damage;
+	bool isAlive;
 
 	//Inventory
 	int max_invSize;
@@ -78,6 +79,9 @@ public:
 
 	void setClassID(int id);
 	int getClassID() { return classID; }
+
+	void setIsAlive(bool);
+	bool getIsAlive() { return isAlive; }
 
 	void addHealth(double);
 	void subHealth(double);
@@ -167,6 +171,11 @@ void Player::subHealth(double n)
 void Player::setClassID(int id)
 {
 	Player::classID = id;
+}
+
+void Player::setIsAlive(bool flag)
+{
+	this->isAlive = flag;
 }
 
 void Player::Attack(Enemy& e)

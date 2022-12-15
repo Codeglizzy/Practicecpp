@@ -23,8 +23,30 @@ public:
 	void InitializePlayer(Player&);
 	void DisplayCharacterSheet(Player&);
 	void DisplayCombatMenu(Player&);
+	void CheckDeath(Player&, Enemy&);
 };
+void GameManager::CheckDeath(Player& p, Enemy& e)
+{
+	p.setIsAlive((p.getCurrentHp() <= 0) ? false : true);
+	e.setIsAlive((e.getCurrentHp() <= 0) ? false : true);
 
+	if (!p.getIsAlive())
+	{
+		cout << "\nGame Over!" << endl;
+		return;
+	}
+	else
+	{
+		cout << "Enemy: " << e.getEnemyName() << endl;
+		cout << "Your HP: " << p.getCurrentHp() << endl;
+		cout << "Enemy HP: " << e.getCurrentHp() << endl;
+	}
+
+	if (!e.getIsAlive())
+	{
+		cout << e.getEnemyName() << " has been slain." << endl;
+	}
+}
 
 void GameManager::StartGame()
 {
@@ -65,6 +87,7 @@ void GameManager::InitializePlayer(Player& p)
 			p.setCurrency(100);
 			p.setClassID(1);
 			p.setMaxInventorySize(5);
+			p.setIsAlive(true);
 
 			//Set Warrior starting inventory
 			p.inventoryList.push_back(lb.weapon_Warrior);
@@ -138,6 +161,7 @@ void GameManager::InitializePlayer(Player& p)
 		DisplayCharacterSheet(p);
 		cout << endl << "Look good? (y/Y or n/N) >>: ";
 		util.PromptChar();
+		cout << endl;
 		if (tolower(util.getPrevCharInput()) == 'n')
 			p.inventoryList.clear();
 	}
@@ -155,35 +179,37 @@ void GameManager::GameLoop()
 	_getch();
 	system("cls");
 
-	ItemLibrary items;
-	EnemyLibrary enemies;
+	ItemLibrary item_Library;
+	EnemyLibrary enemy_Library;
 
 	//Init player object
 	Player main_Character;
-	Enemy enemy("Ragnarok", "Brute", 20, 4, items.weapon_Rogue);
+	Enemy enemy("Ragnarok", "Brute", 20, 4, item_Library.weapon_Rogue);
 
 	//Build Player
 	InitializePlayer(main_Character);
 
 	//Loop Begin
-	bool continueKey = true; int counter = 1, index = 0;
-	while (continueKey && counter < enemies.enemies.size())
+	int counter = 1, index = 0;
+	while (getGameState() && counter < enemy_Library.enemies.size())
 	{
-		while (enemies.myDad.getIsAlive())
-		{
-			cout << "Enemy #" << counter << ": ";
-			cout << "Your enemy is " << enemies.myDad.getEnemyName() << "!" << endl;
-			cout << "Your HP: " << main_Character.getCurrentHp() << endl;
-			cout << "Enemy HP: " << enemies.myDad.getCurrentHp() << endl;
+		cout << "Enemy #" << counter << ": ";
+		cout << "Your enemy is " << enemy_Library.enemies[index].getEnemyName() << "!" << endl;
+		cout << "Your HP: " << main_Character.getCurrentHp() << endl;
+		cout << "Enemy HP: " << enemy_Library.enemies[index].getCurrentHp() << endl;
 
+		while (enemy_Library.enemies[index].getIsAlive())
+		{
 			DisplayCombatMenu(main_Character);
 			if (util.getPrevIntInput() == 1)
 			{
-				main_Character.Attack(enemies.myDad);
+				main_Character.Attack(enemy_Library.enemies[index]);
+				CheckDeath(main_Character, enemy_Library.enemies[index]);
 			}
 			else if (util.getPrevIntInput() == 2)
 			{
-				//To do
+				cout << "\n*Implementation coming soon!*\n" << endl;
+				//todo
 			}
 			else if (util.getPrevIntInput() == 3)
 			{
@@ -193,16 +219,33 @@ void GameManager::GameLoop()
 		}
 		
 
-		//Continue to next monster?
-		cout << "Continue? y/n >>: "; util.PromptChar();
-		if (tolower(util.getPrevCharInput()) != 'y')
-			continueKey = false;
-		counter++;
+		//cout << "Your HP: " << main_Character.getCurrentHp() << endl;
+		//cout << "Enemy HP: " << enemy_Library.enemies[index].getCurrentHp() << endl;
+
+		//Continue the fight?
+		if (main_Character.getIsAlive())
+		{
+			cout << "\nContinue? y/n >>: "; util.PromptChar();
+			if (tolower(util.getPrevCharInput()) != 'y')
+			{
+				setGameFlag(false);
+			}
+			else {
+				cout << endl;
+				counter++; index++;
+			}
+		}
+		else {
+			cout << "Try again next time!" << endl;
+			return;
+		}
+			
+		
 	}
 
 	//end
 	cout << endl << "See you next time! Combat coming soon!" << endl;
-	setGameFlag(false);
+	setGameFlag(getGameState() ? false : true);
 	return;
 }
 
@@ -232,7 +275,7 @@ void GameManager::DisplayCharacterSheet(Player& p)
 
 void GameManager::DisplayCombatMenu(Player& p)
 {
-	cout << p.getPlayerName() << ", what would you like to do?\nPress 1 to attack; 2 to access a list of items; 3 to exit.\n"
+	cout << endl << p.getPlayerName() << ", what would you like to do?\nPress 1 to attack; 2 to access a list of items; 3 to exit.\n"
 		<< "\n >>: ";
 	util.PromptInt();
 }

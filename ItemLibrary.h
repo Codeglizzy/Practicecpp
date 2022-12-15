@@ -21,6 +21,7 @@ public:
 	Item weapon_Wizard; 
 	Item weapon_Rogue; 
 	Item weapon_Priest; 
+	Item jaylynnes_Pickle;
 
 	ItemLibrary()
 	{
@@ -31,6 +32,7 @@ public:
 		weapon_Wizard.Initialize("Staff of Rage", false, 100, 4, 3);
 		weapon_Rogue.Initialize("Deadly Daggers", false, 100, 3, 4);
 		weapon_Priest.Initialize("Talisman of Light", false, 90, 5, 5);
+		
 
 		//Add items
 		this->item_Database.push_back(weapon_Warrior);
@@ -39,5 +41,6 @@ public:
 		this->item_Database.push_back(weapon_Priest);
 		this->item_Database.push_back(health_Potion);
 		this->item_Database.push_back(special_Potion);
+		
 	}
 };
