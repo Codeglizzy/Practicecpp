@@ -186,7 +186,7 @@ void GameManager::GameLoop()
 	//Start
 	cout << "Welcome.\n\nPress any key...";
 	setGameFlag(true);
-	//PlaySound(TEXT("song.wav"), NULL, SND_ASYNC);
+	PlaySound(TEXT("song.wav"), NULL, SND_ASYNC);
 	_getch();
 	system("cls");
 
@@ -241,8 +241,16 @@ void GameManager::GameLoop()
 			else if(tolower(Utility::getPrevCharInput()) == 'y'){
 				cout << endl;
 				index++;
-				cout << "Enemy #" << (index + 1) << ": " << enemy_Library.enemies[index].getEnemyName() << endl;
-				DisplayCombatStats(main_Character, enemy_Library.enemies[index]);
+				if ((index + 1) < main_Character.inventoryList.size())
+				{
+					cout << "Enemy #" << (index + 1) << ": " << enemy_Library.enemies[index].getEnemyName() << endl;
+					DisplayCombatStats(main_Character, enemy_Library.enemies[index]);
+				}
+				else {
+					DisplayCombatStats(main_Character, enemy_Library.enemies[index-1]);
+				}
+				
+				
 			}
 			else {
 				cout << endl << "Incorrect selection...Try again." << endl << endl;
@@ -255,7 +263,8 @@ void GameManager::GameLoop()
 	}
 
 	//end
-	cout << endl << "That's all for now! See you again!" << endl;
+	cout << endl << "\nThat's all for now! See you again!" << endl;
+	_getch();
 	setGameFlag(getGameState() ? false : true);
 	return;
 }

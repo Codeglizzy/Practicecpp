@@ -5,5 +5,6 @@ G:\Variety Projects\Combat System\TurnBasedCombat\Player.h(241,21): warning C401
 G:\Variety Projects\Combat System\TurnBasedCombat\Player.h(252,40): warning C4018: '>=': signed/unsigned mismatch
 G:\Variety Projects\Combat System\TurnBasedCombat\Player.h(257,45): warning C4018: '<': signed/unsigned mismatch
 G:\Variety Projects\Combat System\TurnBasedCombat\GameManager.h(207,34): warning C4018: '<': signed/unsigned mismatch
-G:\Variety Projects\Combat System\TurnBasedCombat\GameManager.h(285,20): warning C4018: '<': signed/unsigned mismatch
+G:\Variety Projects\Combat System\TurnBasedCombat\GameManager.h(244,21): warning C4018: '<': signed/unsigned mismatch
+G:\Variety Projects\Combat System\TurnBasedCombat\GameManager.h(293,20): warning C4018: '<': signed/unsigned mismatch
   TurnBasedCombat.vcxproj -> G:\Variety Projects\Combat System\TurnBasedCombat\Debug\TurnBasedCombat.exe
