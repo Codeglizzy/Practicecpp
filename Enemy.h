@@ -70,7 +70,23 @@ public:
 
 	void Initialize(string, string, double, double, Item&);
 
+	void subHealth(double);
+	void addHealth(double);
+
 };
+
+void Enemy::subHealth(double n)
+{
+	this->currentHp -= n;
+}
+
+void Enemy::addHealth(double n)
+{
+	if ((n + this->currentHp) <= this->baseHp)
+		this->currentHp += n;
+	else
+		this->setCurrentHp(this->baseHp);
+}
 
 void Enemy::setEnemyName(string n)
 {

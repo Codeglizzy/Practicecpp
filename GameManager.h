@@ -78,11 +78,11 @@ void GameManager::InitializePlayer(Player& p)
 		if (util.getPrevIntInput() == 1)
 		{
 			//Set Warrior stats
-			p.setBaseHealth(25);
+			p.setBaseHealth(45);
 			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(10);
 			p.setClassName("Warrior");
-			p.setDamage(3);
+			p.setDamage(2);
 			p.setSummary("A battle-hardened master of the battlefield.");
 			p.setCurrency(100);
 			p.setClassID(1);
@@ -98,11 +98,11 @@ void GameManager::InitializePlayer(Player& p)
 		else if (util.getPrevIntInput() == 2)
 		{
 			//Set Wizard stats
-			p.setBaseHealth(15);
+			p.setBaseHealth(35);
 			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(30);
 			p.setClassName("Wizard");
-			p.setDamage(6);
+			p.setDamage(5);
 			p.setSummary("Whimsical wizard skilled in the art of spellcasting.");
 			p.setCurrency(90);
 			p.setClassID(2);
@@ -117,11 +117,11 @@ void GameManager::InitializePlayer(Player& p)
 		else if (util.getPrevIntInput() == 3)
 		{
 			//Set Rogue stats
-			p.setBaseHealth(10);
+			p.setBaseHealth(30);
 			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(20);
 			p.setClassName("Rogue");
-			p.setDamage(7);
+			p.setDamage(6);
 			p.setSummary("Stealthy rogue that can slip past most undetected, others face their deadly daggers.");
 			p.setCurrency(105);
 			p.setClassID(3);
@@ -175,10 +175,11 @@ void GameManager::GameLoop()
 	//Start
 	cout << "Welcome.\n\nPress any key...";
 	setGameFlag(true);
-	PlaySound(TEXT("song.wav"), NULL, SND_ASYNC);
+	//PlaySound(TEXT("song.wav"), NULL, SND_ASYNC);
 	_getch();
 	system("cls");
 
+	//Declare necessary libraries
 	ItemLibrary item_Library;
 	EnemyLibrary enemy_Library;
 
@@ -190,10 +191,10 @@ void GameManager::GameLoop()
 	InitializePlayer(main_Character);
 
 	//Loop Begin
-	int counter = 1, index = 0;
-	while (getGameState() && counter < enemy_Library.enemies.size())
+	int index = 0;
+	while (getGameState() && (index < enemy_Library.enemies.size()))
 	{
-		cout << "Enemy #" << counter << ": ";
+		cout << "Enemy #" << (index + 1) << ": ";
 		cout << "Your enemy is " << enemy_Library.enemies[index].getEnemyName() << "!" << endl;
 		cout << "Your HP: " << main_Character.getCurrentHp() << endl;
 		cout << "Enemy HP: " << enemy_Library.enemies[index].getCurrentHp() << endl;
@@ -217,10 +218,6 @@ void GameManager::GameLoop()
 				return;
 			}
 		}
-		
-
-		//cout << "Your HP: " << main_Character.getCurrentHp() << endl;
-		//cout << "Enemy HP: " << enemy_Library.enemies[index].getCurrentHp() << endl;
 
 		//Continue the fight?
 		if (main_Character.getIsAlive())
@@ -232,7 +229,7 @@ void GameManager::GameLoop()
 			}
 			else {
 				cout << endl;
-				counter++; index++;
+				index++;
 			}
 		}
 		else {

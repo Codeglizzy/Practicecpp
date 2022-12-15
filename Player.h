@@ -156,16 +156,15 @@ void Player::setDamage(double num)
 
 void Player::addHealth(double n)
 {
-	if ((n + currentHp) <= baseHp)
+	if ((n + this->currentHp) <= this->baseHp)
 		Player::currentHp += n;
 	else
-		this->setCurrentHealth(baseHp);
+		this->setCurrentHealth(this->baseHp);
 }
 
 void Player::subHealth(double n)
 {
-	if((currentHp - n) > 0)
-		this->currentHp -= n;
+	this->currentHp -= n;
 }
 
 void Player::setClassID(int id)
@@ -180,8 +179,8 @@ void Player::setIsAlive(bool flag)
 
 void Player::Attack(Enemy& e)
 {
-	e.setCurrentHp(e.getCurrentHp() - (this->getDamage() + this->getWeapon().getNumericBoost()));
-	this->setCurrentHealth(this->getCurrentHp() - (e.getDamage() + e.getCurrentItem().getNumericBoost()));
+	e.subHealth(this->getDamage() + this->getWeapon().getNumericBoost());
+	this->subHealth(e.getDamage() + e.getCurrentItem().getNumericBoost());
 }
 
 void Player::DisplayItemInventory()

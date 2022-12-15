@@ -18,17 +18,17 @@ public:
 
 	Enemy goblin;
 	Enemy ogre;
-	Enemy myDad;
+	Enemy orc;
 
 	EnemyLibrary()
 	{
-		goblin.Initialize("Goblin", "Scout", 15, 2, this->itemLib.weapon_Warrior);
+		goblin.Initialize("Goblin", "Scout", 15, 2, this->itemLib.weapon_Rogue);
 		ogre.Initialize("Ogre of the Swamp", "Brute", 3, 7, this->itemLib.weapon_Warrior);
-		myDad.Initialize("My Dad", "Beater of Women & Children", 25, 1, this->itemLib.weapon_Priest);
+		orc.Initialize("Orc King", "King Eater", 25, 1, this->itemLib.weapon_Priest);
 
 		enemies.push_back(goblin);
 		enemies.push_back(ogre);
-		enemies.push_back(myDad);
+		enemies.push_back(orc);
 	}
 
 	void CreateEnemy(string name, string cName, double hp, double dam, Item& weapon)

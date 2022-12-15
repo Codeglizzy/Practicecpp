@@ -31,7 +31,7 @@ public:
 		special_Potion.Initialize("Special Elixir", true, 20, 5, 2);
 		weapon_Wizard.Initialize("Staff of Rage", false, 100, 4, 3);
 		weapon_Rogue.Initialize("Deadly Daggers", false, 100, 3, 4);
-		weapon_Priest.Initialize("Talisman of Light", false, 90, 5, 5);
+		weapon_Priest.Initialize("Talisman of Light", false, 90, 4, 5);
 		
 
 		//Add items

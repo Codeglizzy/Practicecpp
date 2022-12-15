@@ -1,5 +1,5 @@
 ﻿E:\Visual Studio\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(513,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (TurnBasedComabt.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   Source.cpp
-G:\Variety Projects\Combat System\TurnBasedCombat\GameManager.h(194,35): warning C4018: '<': signed/unsigned mismatch
-G:\Variety Projects\Combat System\TurnBasedCombat\GameManager.h(267,20): warning C4018: '<': signed/unsigned mismatch
+G:\Variety Projects\Combat System\TurnBasedCombat\GameManager.h(195,34): warning C4018: '<': signed/unsigned mismatch
+G:\Variety Projects\Combat System\TurnBasedCombat\GameManager.h(264,20): warning C4018: '<': signed/unsigned mismatch
   TurnBasedCombat.vcxproj -> G:\Variety Projects\Combat System\TurnBasedCombat\Debug\TurnBasedCombat.exe
