@@ -9,7 +9,6 @@ using namespace std;
 class GameManager
 {
 private:
-	Utility util;
 	bool gameRunning;
 
 
@@ -24,6 +23,7 @@ public:
 	void DisplayCharacterSheet(Player&);
 	void DisplayCombatMenu(Player&);
 	void CheckDeath(Player&, Enemy&);
+	void DisplayCombatStats(Player&, Enemy&);
 };
 void GameManager::CheckDeath(Player& p, Enemy& e)
 {
@@ -37,14 +37,17 @@ void GameManager::CheckDeath(Player& p, Enemy& e)
 	}
 	else
 	{
-		cout << "Enemy: " << e.getEnemyName() << endl;
+		cout << "You: " << p.getPlayerName() << endl;
 		cout << "Your HP: " << p.getCurrentHp() << endl;
+		cout << "Your Weapon: " << p.getWeapon().getItemName() << endl;
+		cout << "Enemy: " << e.getEnemyName() << endl;
 		cout << "Enemy HP: " << e.getCurrentHp() << endl;
+		cout << "Enemy Weapon: " << e.getCurrentItem().getItemName() << endl;
 	}
 
 	if (!e.getIsAlive())
 	{
-		cout << e.getEnemyName() << " has been slain." << endl;
+		cout << endl << e.getEnemyName() << " has been slain." << endl;
 	}
 }
 
@@ -61,111 +64,119 @@ void GameManager::setGameFlag(bool flag)
 
 void GameManager::InitializePlayer(Player& p)
 {
-	ItemLibrary lb;
-
 	do
 	{
 		//Pick class
 		system("cls");
 		cout << "hello, pick your class:\n1 - Warrior, 2 - Wizard, 3 - Rogue, or 4 - Priest\n\n" << " >>: ";
-		util.PromptInt();
-		while (util.getPrevIntInput() < 1 || util.getPrevIntInput() > 4)
+		Utility::PromptInt();
+		p.inventoryList.clear();
+		while (Utility::getPrevIntInput() < 1 || Utility::getPrevIntInput() > 4)
 		{
 			cout << "Try again >>: ";
-			util.PromptInt();
+			Utility::PromptInt();
 		}
 
-		if (util.getPrevIntInput() == 1)
+		if (Utility::getPrevIntInput() == 1)
 		{
+			ItemLibrary lb;
+
 			//Set Warrior stats
 			p.setBaseHealth(45);
 			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(10);
+			p.setCurrentSpecial(p.getBaseSpecial());
 			p.setClassName("Warrior");
 			p.setDamage(2);
 			p.setSummary("A battle-hardened master of the battlefield.");
 			p.setCurrency(100);
-			p.setClassID(1);
-			p.setMaxInventorySize(5);
+			p.setMaxInventorySize(10);
 			p.setIsAlive(true);
 
 			//Set Warrior starting inventory
-			p.inventoryList.push_back(lb.weapon_Warrior);
-			p.inventoryList.push_back(lb.health_Potion);
-			p.inventoryList.push_back(lb.special_Potion);
+			p.addItemToInventory(lb.weapon_Warrior, 1);
+			p.addItemToInventory(lb.health_Potion, 2);
+			p.addItemToInventory(lb.special_Potion, 2);
 
 		}
-		else if (util.getPrevIntInput() == 2)
+		else if (Utility::getPrevIntInput() == 2)
 		{
+			ItemLibrary lb;
+
 			//Set Wizard stats
 			p.setBaseHealth(35);
 			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(30);
+			p.setCurrentSpecial(p.getBaseSpecial());
 			p.setClassName("Wizard");
 			p.setDamage(5);
 			p.setSummary("Whimsical wizard skilled in the art of spellcasting.");
 			p.setCurrency(90);
-			p.setClassID(2);
-			p.setMaxInventorySize(5);
+			p.setMaxInventorySize(10);
+			p.setIsAlive(true);
 
 			//Set Wizard starting inventory
-			p.inventoryList.push_back(lb.weapon_Wizard);
-			p.inventoryList.push_back(lb.health_Potion);
-			p.inventoryList.push_back(lb.special_Potion);
+			p.addItemToInventory(lb.weapon_Wizard, 1);
+			p.addItemToInventory(lb.health_Potion, 2);
+			p.addItemToInventory(lb.special_Potion, 2);
 
 		}
-		else if (util.getPrevIntInput() == 3)
+		else if (Utility::getPrevIntInput() == 3)
 		{
+			ItemLibrary lb;
+
 			//Set Rogue stats
 			p.setBaseHealth(30);
 			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(20);
+			p.setCurrentSpecial(p.getBaseSpecial());
 			p.setClassName("Rogue");
 			p.setDamage(6);
 			p.setSummary("Stealthy rogue that can slip past most undetected, others face their deadly daggers.");
 			p.setCurrency(105);
-			p.setClassID(3);
-			p.setMaxInventorySize(5);
+			p.setMaxInventorySize(10);
+			p.setIsAlive(true);
 
 			//Set Rogue starting inventory
-			p.inventoryList.push_back(lb.weapon_Rogue);
-			p.inventoryList.push_back(lb.health_Potion);
-			p.inventoryList.push_back(lb.special_Potion);
+			p.addItemToInventory(lb.weapon_Rogue, 1);
+			p.addItemToInventory(lb.health_Potion, 2);
+			p.addItemToInventory(lb.special_Potion, 2);
 
 		}
-		else if (util.getPrevIntInput() == 4)
+		else if (Utility::getPrevIntInput() == 4)
 		{
+			ItemLibrary lb;
+
 			//Set Priest stats
-			p.setBaseHealth(20);
+			p.setBaseHealth(40);
 			p.setCurrentHealth(p.getBaseHealth());
 			p.setBaseSpecial(25);
+			p.setCurrentSpecial(p.getBaseSpecial());
 			p.setClassName("Priest");
 			p.setDamage(5);
 			p.setSummary("Devout scholar of religion. Derives healing properties from the deity 'Big Chungus'.");
 			p.setCurrency(55);
-			p.setClassID(4);
+			p.setMaxInventorySize(10);
+			p.setIsAlive(true);
 
 			//Set Priest starting inventory
-			p.setMaxInventorySize(5);
-			p.inventoryList.push_back(lb.weapon_Priest);
-			p.inventoryList.push_back(lb.health_Potion);
-			p.inventoryList.push_back(lb.special_Potion);
+			p.addItemToInventory(lb.weapon_Priest, 1);
+			p.addItemToInventory(lb.health_Potion, 2);
+			p.addItemToInventory(lb.special_Potion, 2);
 
 		}
 
 		cout << "Have you decided a name for your " << p.getClassName() << "?\n >>: ";
-		p.setPlayerName(util.PromptString());
+		p.setPlayerName(Utility::PromptString());
 
-		cout << endl << util.getPrevStringInput() << "? \nSounds great! Take one last looky-loo at your character";
+		cout << endl << Utility::getPrevStringInput() << "? \nSounds great! Take one last looky-loo at your character";
 		cout << " and make sure everything is square:\n" << endl;
 		DisplayCharacterSheet(p);
 		cout << endl << "Look good? (y/Y or n/N) >>: ";
-		util.PromptChar();
+		Utility::PromptChar();
 		cout << endl;
-		if (tolower(util.getPrevCharInput()) == 'n')
-			p.inventoryList.clear();
 	}
-	while (tolower(util.getPrevCharInput()) == 'n');
+	while (tolower(Utility::getPrevCharInput()) != 'y');
 }
 
 
@@ -185,68 +196,79 @@ void GameManager::GameLoop()
 
 	//Init player object
 	Player main_Character;
-	Enemy enemy("Ragnarok", "Brute", 20, 4, item_Library.weapon_Rogue);
 
 	//Build Player
 	InitializePlayer(main_Character);
 
 	//Loop Begin
 	int index = 0;
+	cout << "Enemy #" << (index + 1) << ": " << enemy_Library.enemies[index].getEnemyName() << endl;
+	DisplayCombatStats(main_Character, enemy_Library.enemies[index]);
 	while (getGameState() && (index < enemy_Library.enemies.size()))
 	{
-		cout << "Enemy #" << (index + 1) << ": ";
-		cout << "Your enemy is " << enemy_Library.enemies[index].getEnemyName() << "!" << endl;
-		cout << "Your HP: " << main_Character.getCurrentHp() << endl;
-		cout << "Enemy HP: " << enemy_Library.enemies[index].getCurrentHp() << endl;
-
 		while (enemy_Library.enemies[index].getIsAlive())
 		{
 			DisplayCombatMenu(main_Character);
-			if (util.getPrevIntInput() == 1)
+			if (Utility::getPrevIntInput() == 1)
 			{
 				main_Character.Attack(enemy_Library.enemies[index]);
 				CheckDeath(main_Character, enemy_Library.enemies[index]);
+				
 			}
-			else if (util.getPrevIntInput() == 2)
+			else if (Utility::getPrevIntInput() == 2)
 			{
-				cout << "\n*Implementation coming soon!*\n" << endl;
-				//todo
+				main_Character.DisplayItemInventory();
+				DisplayCombatStats(main_Character, enemy_Library.enemies[index]);
 			}
-			else if (util.getPrevIntInput() == 3)
+			else if (Utility::getPrevIntInput() == 3)
 			{
 				cout << "\nSee you next time!" << endl;
 				return;
+			}
+			else {
+				cout << endl << "Incorrect selection...Try again." << endl << endl;
 			}
 		}
 
 		//Continue the fight?
 		if (main_Character.getIsAlive())
 		{
-			cout << "\nContinue? y/n >>: "; util.PromptChar();
-			if (tolower(util.getPrevCharInput()) != 'y')
+			cout << "\nContinue? y/n >>: "; Utility::PromptChar();
+			if (tolower(Utility::getPrevCharInput()) == 'n')
 			{
 				setGameFlag(false);
 			}
-			else {
+			else if(tolower(Utility::getPrevCharInput()) == 'y'){
 				cout << endl;
 				index++;
+				cout << "Enemy #" << (index + 1) << ": " << enemy_Library.enemies[index].getEnemyName() << endl;
+				DisplayCombatStats(main_Character, enemy_Library.enemies[index]);
+			}
+			else {
+				cout << endl << "Incorrect selection...Try again." << endl << endl;
 			}
 		}
 		else {
 			cout << "Try again next time!" << endl;
 			return;
 		}
-			
-		
 	}
 
 	//end
-	cout << endl << "See you next time! Combat coming soon!" << endl;
+	cout << endl << "That's all for now! See you again!" << endl;
 	setGameFlag(getGameState() ? false : true);
 	return;
 }
 
-
+void GameManager::DisplayCombatStats(Player& p, Enemy& e)
+{
+	cout << "You: " << p.getPlayerName() << endl;
+	cout << "Your HP: " << p.getCurrentHp() << endl;
+	cout << "Your Weapon: " << p.getWeapon().getItemName() << endl;
+	cout << "Enemy: " << e.getEnemyName() << endl;
+	cout << "Enemy HP: " << e.getCurrentHp() << endl;
+	cout << "Enemy Weapon: " << e.getCurrentItem().getItemName();
+}
 
 void GameManager::DisplayCharacterSheet(Player& p)
 {
@@ -259,20 +281,21 @@ void GameManager::DisplayCharacterSheet(Player& p)
 	cout << "Special: " << p.getBaseSpecial() << endl;
 	cout << "Currency: " << p.getCurrency() << endl;
 	cout << "Damage Output: " << (p.getDamage() + p.inventoryList[0].getNumericBoost()) << endl;
-	cout << "ID: " << p.getClassID() << endl;
 	cout << "\nStarting Items: \n";
 	for (int i = 0; i < p.inventoryList.size(); i++)
 	{
-		cout << " - " << p.inventoryList[i].getItemName() << endl;
+		if (p.getInventoryItem(i).getQuantity() <= 1)
+			cout << setw(25) << right << (i + 1) << " - " << p.getInventoryItem(i).getItemName() << endl;
+		else
+			cout << setw(25) << right << (i + 1) << " - " << p.getInventoryItem(i).getItemName() << " x" << p.getInventoryItem(i).getQuantity() << endl;
 	}
 	cout << "\nSummary: " << p.getSummary() << endl;
 	cout << "\n********************************************************************************" << endl;
 }
 
-
 void GameManager::DisplayCombatMenu(Player& p)
 {
-	cout << endl << p.getPlayerName() << ", what would you like to do?\nPress 1 to attack; 2 to access a list of items; 3 to exit.\n"
+	cout << endl << endl << p.getPlayerName() << ", what would you like to do?\nPress 1 to attack; 2 to access a list of items; 3 to exit.\n"
 		<< "\n >>: ";
-	util.PromptInt();
+	Utility::PromptInt();
 }

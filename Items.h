@@ -16,7 +16,9 @@ private:
 	double itemValue;
 	double numericBoost;
 
-	int itemID;
+	int quantity;
+
+	string itemTag;
 
 	string itemName;
 public:
@@ -25,17 +27,19 @@ public:
 		consumable = false;
 		numericBoost = 0;
 		itemValue = 0;
-		itemID = 00;
+		itemTag = "Null Item";
 		itemName = "EMPTY_OBJECT";
+		quantity = 0;
 	}
 
-	Item(string n, bool con, double val, double numBoost, int id )
+	Item(string n, bool con, double val, double numBoost, string tag )
 	{
 		this->itemName = n;
 		this->consumable = con;
 		this->itemValue = val;
 		this->numericBoost = numBoost;
-		this->itemID = id;
+		this->itemTag = tag;
+		this->quantity = 1;
 	}
 
 	void setConsumable(bool flag);
@@ -45,25 +49,35 @@ public:
 	void setItemValue(double val);
 	double getItemValue() { return itemValue; }
 
-	void Initialize(string, bool, double, double, int);
+	void Initialize(string, bool, double, double, string);
 
-	void setItemID(int id);
-	int getItemID() { return itemID; }
+	void setItemTag(string tag);
+	string getItemTag() { return itemTag; }
 
 	void setItemName(string name);
 	string getItemName() { return itemName; }
 
 	void setNumericBoost(double v);
 	double getNumericBoost() { return numericBoost; }
+
+	void setQuantity(int);
+	int getQuantity() { return quantity; }
+
 };
 
-void Item::Initialize(string n, bool c,double p, double v, int h)
+void Item::setQuantity(int p)
 {
-	this->itemName = n;
-	this->consumable = c;
-	this->itemValue = p;
-	this->numericBoost = v;
-	this->itemID = h;
+	this->quantity = p;
+}
+
+void Item::Initialize(string name, bool consume,double price, double numBoost, string tag)
+{
+	this->itemName = name;
+	this->consumable = consume;
+	this->itemValue = price;
+	this->numericBoost = numBoost;
+	this->itemTag = tag;
+	this->quantity = 1;
 }
 
 void Item::setConsumable(bool flag)
@@ -76,9 +90,9 @@ void Item::setNumericBoost(double v)
 	Item::numericBoost = v;
 }
 
-void Item::setItemID(int id)
+void Item::setItemTag(string tag)
 {
-	Item::itemID = id;
+	Item::itemTag = tag;
 }
 
 void Item::setItemName(string name)

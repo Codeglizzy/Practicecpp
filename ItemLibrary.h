@@ -21,17 +21,16 @@ public:
 	Item weapon_Wizard; 
 	Item weapon_Rogue; 
 	Item weapon_Priest; 
-	Item jaylynnes_Pickle;
 
 	ItemLibrary()
 	{
 		//Define items
-		weapon_Warrior.Initialize("Mighty Blade", false, 150, 7, 115);
-		health_Potion.Initialize("Health Elixir", true, 15, 5, 1);
-		special_Potion.Initialize("Special Elixir", true, 20, 5, 2);
-		weapon_Wizard.Initialize("Staff of Rage", false, 100, 4, 3);
-		weapon_Rogue.Initialize("Deadly Daggers", false, 100, 3, 4);
-		weapon_Priest.Initialize("Talisman of Light", false, 90, 4, 5);
+		weapon_Warrior.Initialize("Mighty Blade", false, 150, 7, "weapon");
+		health_Potion.Initialize("Health Elixir", true, 15, 15, "h_elixir");
+		special_Potion.Initialize("Special Elixir", true, 20, 15, "s_elixir");
+		weapon_Wizard.Initialize("Staff of Rage", false, 100, 4, "weapon");
+		weapon_Rogue.Initialize("Deadly Daggers", false, 100, 3, "weapon");
+		weapon_Priest.Initialize("Talisman of Light", false, 90, 4, "weapon");
 		
 
 		//Add items
@@ -43,4 +42,6 @@ public:
 		this->item_Database.push_back(special_Potion);
 		
 	}
+
+	
 };

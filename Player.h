@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include <cctype>
 #include <vector>
+#include "Util.h"
 using namespace std;
 
 using namespace std;
@@ -25,15 +26,12 @@ private:
 	//Inventory
 	int max_invSize;
 	int curr_invSize;
-	int classID;
 
 	//Personality
 	string summary;
 	string className;
 	string playerName;
 
-
-	
 
 public:
 	//Inventory list
@@ -67,8 +65,18 @@ public:
 	void setMaxInventorySize(int num);
 	int getMaxInventorySpace() { return max_invSize; }
 
+	void addItemToInventory(Item&, int);
+
 	void setCurrInventorySize(int num);
-	int getCurrInventorySize() { return inventoryList.size(); }
+	int getCurrInventorySize() { 
+		int size = 0;
+		for (int i = 0; i < this->inventoryList.size(); i++)
+		{
+			size += this->inventoryList[i].getQuantity();
+		}
+		return size; 
+	
+	}
 
 	void setInventory(vector<Item> invList);
 	vector<Item> getInventoryList() { return inventoryList; }
@@ -77,14 +85,13 @@ public:
 	void setDamage(double num);
 	double getDamage() { return damage; }
 
-	void setClassID(int id);
-	int getClassID() { return classID; }
-
 	void setIsAlive(bool);
 	bool getIsAlive() { return isAlive; }
 
 	void addHealth(double);
+	void addSpecial(double);
 	void subHealth(double);
+	void subSpecial(double);
 
 	Item getWeapon() { return inventoryList[0]; }
 
@@ -92,7 +99,55 @@ public:
 
 	void DisplayItemInventory();
 
+	void UseItem(Item&);
+	void RemoveItem(int i);
 };
+
+void Player::addSpecial(double n)
+{
+	if ((n + this->currentSp) <= this->baseSp)
+		Player::currentSp += n;
+	else
+		this->setCurrentSpecial(this->baseSp);
+}
+
+void Player::subSpecial(double n)
+{
+	this->currentSp -= n;
+}
+
+void Player::UseItem(Item& i)
+{
+	if (i.getItemTag() == "weapon")
+	{
+		cout << "This item is already equipped..." << endl;
+		return;
+	}
+	if(i.getItemTag() == "h_elixir"){
+		addHealth(i.getNumericBoost());
+		i.setQuantity(i.getQuantity() - 1);
+		if(i.getQuantity() == 0)
+			RemoveItem(Utility::getPrevIntInput());
+		cout << endl << "Current HP: " << getCurrentHp() << endl;
+	}else if (i.getItemTag() == "s_elixir") {
+		addSpecial(i.getNumericBoost());
+		i.setQuantity(i.getQuantity() - 1);
+		if(i.getQuantity() == 0)
+			RemoveItem(Utility::getPrevIntInput());
+		cout << endl << "Current SP: " << getCurrentSpecial() << endl;
+	}
+}
+
+void Player::addItemToInventory(Item& itemToAdd, int quantity)
+{
+	itemToAdd.setQuantity(quantity);
+	this->inventoryList.push_back(itemToAdd);
+}
+
+void Player::RemoveItem(int i)
+{
+	this->inventoryList.erase(this->inventoryList.begin()+i-1);
+}
 
 void Player::setBaseHealth(double setHp)
 {
@@ -167,11 +222,6 @@ void Player::subHealth(double n)
 	this->currentHp -= n;
 }
 
-void Player::setClassID(int id)
-{
-	Player::classID = id;
-}
-
 void Player::setIsAlive(bool flag)
 {
 	this->isAlive = flag;
@@ -185,9 +235,30 @@ void Player::Attack(Enemy& e)
 
 void Player::DisplayItemInventory()
 {
-	cout << "(" << this->getCurrInventorySize() << "/" << this->getMaxInventorySpace() << ") Items in inventory: " << endl;
-	for (int i = 0; i < this->getCurrInventorySize(); i++)
+	while (Utility::getPrevIntInput() != 99)
 	{
-		cout << right << " - " << this->getInventoryItem(i).getItemName() << endl;
-	}
+		cout << endl << "(" << this->getCurrInventorySize() << "/" << this->getMaxInventorySpace() << ") Items in inventory: " << endl;
+		for (int i = 0; i < this->inventoryList.size(); i++)
+		{
+			if (this->getInventoryItem(i).getQuantity() <= 1)
+				cout << setw(25) << right << (i + 1) << " - " << this->getInventoryItem(i).getItemName() << endl;
+			else
+				cout << setw(25) << right << (i + 1) << " - " << this->getInventoryItem(i).getItemName() << " x" << this->getInventoryItem(i).getQuantity() << endl;
+		}
+
+		cout << endl << "What item would you like to use (99 to close inventory): ";
+		Utility::PromptInt();
+		
+		if ((Utility::getPrevIntInput() - 1) >= inventoryList.size() && Utility::getPrevIntInput() != 99)
+		{
+			cout << endl << endl << "Press any key to try again..." << endl;
+			_getch();
+		}
+		else if ((Utility::getPrevIntInput() - 1) < inventoryList.size())
+		{
+			UseItem(this->inventoryList[Utility::getPrevIntInput() - 1]);
+		}
+			
+	} 
+
 }

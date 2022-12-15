@@ -8,16 +8,12 @@
 #include <vector>
 using namespace std;
 
-//Quick solution to grab inputs
-class Utility
-{
-private:
+namespace Utility {
 	int numericInput;
 	double floatingPointInput;
 	string stringInput;
 	char charInput;
 
-public:
 	string PromptString()
 	{
 		cin >> stringInput;
@@ -42,10 +38,8 @@ public:
 		return charInput;
 	}
 
-
 	int getPrevIntInput() { return numericInput; }
 	double getPrevDoubleInput() { return floatingPointInput; }
 	string getPrevStringInput() { return stringInput; }
 	char getPrevCharInput() { return charInput; }
-};
-
+}
