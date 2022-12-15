@@ -1,5 +1,11 @@
 #pragma once
-#include "GameManager.h"
+#include <iostream>
+#include <conio.h>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+#include <cctype>
+#include <vector>
 using namespace std;
 
 class Item
@@ -39,7 +45,7 @@ public:
 	void setItemValue(double val);
 	double getItemValue() { return itemValue; }
 
-	void initItem(string, bool, double, double, int);
+	void Initialize(string, bool, double, double, int);
 
 	void setItemID(int id);
 	int getItemID() { return itemID; }
@@ -51,7 +57,7 @@ public:
 	double getNumericBoost() { return numericBoost; }
 };
 
-void Item::initItem(string n, bool c,double p, double v, int h)
+void Item::Initialize(string n, bool c,double p, double v, int h)
 {
 	this->itemName = n;
 	this->consumable = c;

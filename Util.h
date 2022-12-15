@@ -1,5 +1,11 @@
 #pragma once
-#include "GameManager.h"
+#include <iostream>
+#include <conio.h>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+#include <cctype>
+#include <vector>
 using namespace std;
 
 //Quick solution to grab inputs

@@ -1,16 +1,9 @@
 #pragma once
-#include <iostream>
-#include <conio.h>
-#include <iomanip>
-#include <string>
-#include <Windows.h>
-#include <cctype>
-#include <vector>
-#include "Items.h"
 #include "Util.h"
-#include "Player.h"
 #include "ItemLibrary.h"
 #include "Enemy.h"
+#include "EnemyLibrary.h"
+#include "Player.h"
 using namespace std;
 
 class GameManager
@@ -27,10 +20,9 @@ public:
 	void StartGame();
 	void GameLoop();
 
-	void InitializePlayer(Player& p);
-
-	void DisplayCharacterSheet(Player& p);
-	void DisplayCombatMenu(Player& p);
+	void InitializePlayer(Player&);
+	void DisplayCharacterSheet(Player&);
+	void DisplayCombatMenu(Player&);
 };
 
 
@@ -164,42 +156,44 @@ void GameManager::GameLoop()
 	system("cls");
 
 	ItemLibrary items;
+	EnemyLibrary enemies;
 
 	//Init player object
 	Player main_Character;
-	Enemy enemy("Ragnarok", "Brute", 20, 4, items.item_Database[0]);
+	Enemy enemy("Ragnarok", "Brute", 20, 4, items.weapon_Rogue);
 
 	//Build Player
 	InitializePlayer(main_Character);
 
-	bool continueKey = true; int counter = 1;
-	while (continueKey)
+	//Loop Begin
+	bool continueKey = true; int counter = 1, index = 0;
+	while (continueKey && counter < enemies.enemies.size())
 	{
-		cout << "Enemy #" << counter << ": ";
-		cout << "Your enemy is " << enemy.getEnemyName() << "!" << endl;
-		cout << "Your HP: " << main_Character.getCurrentHealth() << endl;
-		cout << "Enemy HP: " << enemy.getCurrentHp() << endl; 
-
-		DisplayCombatMenu(main_Character);
-		if (util.getPrevIntInput() == 1)
+		while (enemies.myDad.getIsAlive())
 		{
-			enemy.setCurrentHp(enemy.getCurrentHp() - (main_Character.getDamage() + main_Character.getWeapon().getNumericBoost()));
 			cout << "Enemy #" << counter << ": ";
-			cout << "Your enemy is " << enemy.getEnemyName() << "!" << endl;
-			cout << "Your HP: " << main_Character.getCurrentHealth() << endl;
-			cout << "Enemy HP: " << enemy.getCurrentHp() << endl;
-		}else if (util.getPrevIntInput() == 2)
-		{
-			//To do
-		}
-		else if (util.getPrevIntInput() == 3)
-		{
-			//To do
-		}else
-		{
-			//To do
-		}
+			cout << "Your enemy is " << enemies.myDad.getEnemyName() << "!" << endl;
+			cout << "Your HP: " << main_Character.getCurrentHp() << endl;
+			cout << "Enemy HP: " << enemies.myDad.getCurrentHp() << endl;
 
+			DisplayCombatMenu(main_Character);
+			if (util.getPrevIntInput() == 1)
+			{
+				main_Character.Attack(enemies.myDad);
+			}
+			else if (util.getPrevIntInput() == 2)
+			{
+				//To do
+			}
+			else if (util.getPrevIntInput() == 3)
+			{
+				cout << "\nSee you next time!" << endl;
+				return;
+			}
+		}
+		
+
+		//Continue to next monster?
 		cout << "Continue? y/n >>: "; util.PromptChar();
 		if (tolower(util.getPrevCharInput()) != 'y')
 			continueKey = false;

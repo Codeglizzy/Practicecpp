@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyLibrary.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="ItemLibrary.h" />
     <ClInclude Include="Items.h" />

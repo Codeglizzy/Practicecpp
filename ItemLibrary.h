@@ -1,5 +1,12 @@
 #pragma once
-#include "GameManager.h"
+#include <iostream>
+#include <conio.h>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+#include <cctype>
+#include <vector>
+#include "Items.h"
 using namespace std;
 
 class ItemLibrary
@@ -18,12 +25,12 @@ public:
 	ItemLibrary()
 	{
 		//Define items
-		weapon_Warrior.initItem("Mighty Blade", false, 150, 7, 115);
-		health_Potion.initItem("Health Elixir", true, 15, 5, 1);
-		special_Potion.initItem("Special Elixir", true, 20, 5, 2);
-		weapon_Wizard.initItem("Staff of Rage", false, 100, 4, 3);
-		weapon_Rogue.initItem("Deadly Daggers", false, 100, 3, 4);
-		weapon_Priest.initItem("Talisman of Light", false, 90, 5, 5);
+		weapon_Warrior.Initialize("Mighty Blade", false, 150, 7, 115);
+		health_Potion.Initialize("Health Elixir", true, 15, 5, 1);
+		special_Potion.Initialize("Special Elixir", true, 20, 5, 2);
+		weapon_Wizard.Initialize("Staff of Rage", false, 100, 4, 3);
+		weapon_Rogue.Initialize("Deadly Daggers", false, 100, 3, 4);
+		weapon_Priest.Initialize("Talisman of Light", false, 90, 5, 5);
 
 		//Add items
 		this->item_Database.push_back(weapon_Warrior);

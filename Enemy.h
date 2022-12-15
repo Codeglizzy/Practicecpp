@@ -1,5 +1,13 @@
 #pragma once
-#include "GameManager.h"
+#include <iostream>
+#include <conio.h>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+#include <cctype>
+#include <vector>
+#include "ItemLibrary.h"
+using namespace std;
 
 class Enemy
 {
@@ -9,6 +17,8 @@ private:
 	double baseHp;
 	double currentHp;
 	double damage;
+
+	bool isAlive;
 
 	ItemLibrary inv;
 	Item weapon;
@@ -22,6 +32,7 @@ public:
 		this->damage = 2;
 		this->weapon = inv.weapon_Warrior;
 		this->className = "Warrior";
+		this->isAlive = true;
 	}
 
 	//Custom enemy
@@ -33,6 +44,7 @@ public:
 		this->currentHp = baseHp;
 		this->damage = dam;
 		this->weapon = weaponOfChoice;
+		this->isAlive = true;
 	}
 
 	void setEnemyName(string);
@@ -52,6 +64,11 @@ public:
 
 	void setClassName(string);
 	string getClassName() { return className; }
+
+	void setAlive(bool);
+	bool getIsAlive() { return isAlive; }
+
+	void Initialize(string, string, double, double, Item&);
 
 };
 
@@ -83,4 +100,19 @@ void Enemy::setClassName(string n)
 void Enemy::setDamage(double dam)
 {
 	this->damage = dam;
+}
+
+void Enemy::setAlive(bool flag)
+{
+	this->isAlive = flag;
+}
+
+void Enemy::Initialize(string name, string cName, double hp, double dam, Item& item)
+{
+	this->enemyName = name;
+	this->className = cName;
+	this->baseHp = hp;
+	this->currentHp = this->baseHp;
+	this->damage = dam;
+	this->weapon = item;
 }

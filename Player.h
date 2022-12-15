@@ -1,5 +1,12 @@
 #pragma once
-#include "GameManager.h"
+#include <iostream>
+#include <conio.h>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+#include <cctype>
+#include <vector>
+using namespace std;
 
 using namespace std;
 
@@ -24,6 +31,7 @@ private:
 	string className;
 	string playerName;
 
+
 	
 
 public:
@@ -38,7 +46,7 @@ public:
 	double getBaseSpecial() { return baseSp; }
 
 	void setCurrentHealth(double);
-	double getCurrentHealth() { return currentHp; }
+	double getCurrentHp() { return currentHp; }
 	
 	void setCurrentSpecial(double);
 	double getCurrentSpecial() { return currentSp; }
@@ -59,7 +67,11 @@ public:
 	int getMaxInventorySpace() { return max_invSize; }
 
 	void setCurrInventorySize(int num);
-	int getCurrInventorySize() { return curr_invSize; }
+	int getCurrInventorySize() { return inventoryList.size(); }
+
+	void setInventory(vector<Item> invList);
+	vector<Item> getInventoryList() { return inventoryList; }
+	Item getInventoryItem(int p) { return inventoryList[p]; }
 
 	void setDamage(double num);
 	double getDamage() { return damage; }
@@ -71,6 +83,10 @@ public:
 	void subHealth(double);
 
 	Item getWeapon() { return inventoryList[0]; }
+
+	void Attack(Enemy& e);
+
+	void DisplayItemInventory();
 
 };
 
@@ -89,6 +105,10 @@ void Player::setCurrency(double curr)
 	Player::currency = curr;
 }
 
+void Player::setInventory(vector<Item> invList)
+{
+	this->inventoryList = invList;
+}
 
 void Player::setSummary(string sum)
 {
@@ -149,3 +169,17 @@ void Player::setClassID(int id)
 	Player::classID = id;
 }
 
+void Player::Attack(Enemy& e)
+{
+	e.setCurrentHp(e.getCurrentHp() - (this->getDamage() + this->getWeapon().getNumericBoost()));
+	this->setCurrentHealth(this->getCurrentHp() - (e.getDamage() + e.getCurrentItem().getNumericBoost()));
+}
+
+void Player::DisplayItemInventory()
+{
+	cout << "(" << this->getCurrInventorySize() << "/" << this->getMaxInventorySpace() << ") Items in inventory: " << endl;
+	for (int i = 0; i < this->getCurrInventorySize(); i++)
+	{
+		cout << right << " - " << this->getInventoryItem(i).getItemName() << endl;
+	}
+}
