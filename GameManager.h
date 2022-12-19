@@ -186,7 +186,6 @@ void GameManager::GameLoop()
 	//Start
 	cout << "Welcome.\n\nPress any key...";
 	setGameFlag(true);
-	PlaySound(TEXT("song.wav"), NULL, SND_ASYNC);
 	_getch();
 	system("cls");
 
