@@ -1,5 +1,5 @@
 # Turn-Based Combat Simulator
-This is a side project I decided to create to practice my c++ skills.
+This is a side project I decided to create to practice my C++ skills.
 
 # How to use
 - Clone the repository
@@ -9,14 +9,14 @@ This is a side project I decided to create to practice my c++ skills.
 
 # Customization
 
-If you have a c++ compiler and an editor, you can easily modify the code how you see fit.
+If you have a C++ compiler and an editor, you can easily modify the code how you see fit.
 
 ### Adding an Enemy
 You can easily create your own enemies to encounter by utilizing the `Enemy` class.
 
 In order to use the Enemy class, navigate to `EnemyLibrary.h` and declare an `Enemy` named 
 `myEnemy` or whatever enemy you plan to define
-Example:
+**Example:**
 
 ```
 EnemyLibrary.h
@@ -44,7 +44,7 @@ The `Enemy` initializer takes in a total of 5 arguments:
 - Starting Item (`Item`)
 
 
-Example:
+**Example:**
 
 ```
 	Enemy goblin;
@@ -85,7 +85,7 @@ The `Item` initialization contains 5 arguments, similar to `Enemy` but slightly 
 The process of implementation is similar to adding an enemy, only you will be in `ItemLibrary.h` 
 for the initialization and adding to the queue.
 
-Example (I am creating the `weapon_holyStickOfDeath`):
+**Example (I am creating the `weapon_holyStickOfDeath`):**
 ```
 	//Declare items
 	Item weapon_Warrior; 
@@ -120,11 +120,14 @@ Example (I am creating the `weapon_holyStickOfDeath`):
   
 ```
 
-That is all for the item, although the game will not automatically assign the item.
-You will need to do that manually during the creation of the enemy as I did above. Here's
-an example of how you could initialize an enemy with the newly created item:
+That is all for the item, although the game will not automatically assign the item to
+the newly created enemy. You will need to do that manually during the creation of the 
+enemy as I did earlier, but with the new item. Here's an example of how you could initialize 
+an enemy with the newly created item:
 
 ```
+CHANGE
+
 myEnemy.Initialize("Hello World", "Greeter of Many", 15, 5, this->itemLib.weapon_Wizard);
 
 TO
