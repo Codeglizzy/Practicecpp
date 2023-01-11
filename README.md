@@ -14,8 +14,9 @@ If you have a C++ compiler and an editor, you can easily modify the code how you
 ### Adding an Enemy
 You can easily create your own enemies to encounter by utilizing the `Enemy` class.
 
-In order to use the Enemy class, navigate to `EnemyLibrary.h` and declare an `Enemy` named 
+In order to use the `Enemy` class, navigate to `EnemyLibrary.h` and declare an `Enemy` named 
 `myEnemy` or whatever enemy you plan to define
+
 **Example:**
 
 ```
