@@ -37,7 +37,7 @@ public:
 ```
 
 Now just initialize the enemy in the constructor and place the enemy in the battle queue.
-The `Enemy` initializer takes in a total of 5 arguments:
+The `Enemy.Initialize()` member function takes in a total of 5 arguments:
 - Name (`string`)
 - Class Name (`string`)
 - Health Points (`double`)
@@ -76,7 +76,7 @@ That is all. You have successfully created an enemy!
 The process for adding an item is the exact same as adding an enemy, only with different arguments
 when initializing in the constructor.
 
-The `Item` initialization contains 5 arguments, similar to `Enemy` but slightly different:
+The `Item.Initialize()` member function contains 5 arguments, similar to `Enemy` but slightly different:
 - Name (`string`)
 - Consumable (`boolean`)
 - Price (`double`)
